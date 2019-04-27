@@ -6,15 +6,32 @@
 // To run the code:
 //     $ cargo run
 
-use derive_builder::Builder;
+use derive_debug::CustomDebug;
+use std::fmt::Debug;
 
-#[derive(Builder)]
-pub struct Command {
-    executable: String,
-    #[builder(each = "arg")]
-    args: Vec<String>,
-    env: Vec<String>,
-    current_dir: Option<String>,
+pub trait Trait {
+    type Value;
 }
 
-fn main() {}
+#[derive(CustomDebug)]
+#[debug(bound = "T::Value: Debug")]
+pub struct Wrapper<T: Trait> {
+    field: Field<T>,
+}
+
+#[derive(CustomDebug)]
+struct Field<T: Trait> {
+    values: Vec<T::Value>,
+}
+
+fn assert_debug<F: Debug>() {}
+
+fn main() {
+    struct Id;
+
+    impl Trait for Id {
+        type Value = u8;
+    }
+
+    assert_debug::<Wrapper<Id>>();
+}

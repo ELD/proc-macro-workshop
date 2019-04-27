@@ -349,8 +349,7 @@ fn get_attr_ident(field: &syn::Field) -> syn::Ident {
     if field.attrs.len() > 0 {
         let attr = field.attrs
             .iter()
-            .map(|a| a.parse_meta())
-            .filter_map(Result::ok)
+            .filter_map(|a| a.parse_meta().ok())
             .nth(0);
 
         let attr_str = match attr {
