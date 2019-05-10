@@ -1,0 +1,16 @@
+[package]
+name = "seq-impl"
+version = "0.1.0"
+authors = ["Eric Dattore <eric.dattore@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "seq_impl"
+proc-macro = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+syn = "1.0"
+proc-macro2 = "1.0"
+proc-macro-hack = "0.5"

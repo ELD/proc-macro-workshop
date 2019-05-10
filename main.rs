@@ -6,32 +6,43 @@
 // To run the code:
 //     $ cargo run
 
-use derive_debug::CustomDebug;
-use std::fmt::Debug;
+use seq::eseq;
+use seq::seq;
 
-pub trait Trait {
-    type Value;
+// Source of truth. Call a given macro passing nproc as argument.
+//
+// We want this number to appear in only one place so that updating this one
+// number will correctly affect anything that depends on the number of procs.
+macro_rules! pass_nproc {
+    ($mac:ident) => {
+        $mac! { 256 }
+    };
 }
 
-#[derive(CustomDebug)]
-#[debug(bound = "T::Value: Debug")]
-pub struct Wrapper<T: Trait> {
-    field: Field<T>,
+macro_rules! literal_identity_macro {
+    ($nproc:literal) => {
+        $nproc
+    };
 }
 
-#[derive(CustomDebug)]
-struct Field<T: Trait> {
-    values: Vec<T::Value>,
-}
+// Expands to: `const NPROC: usize = 256;`
+const NPROC: usize = pass_nproc!(literal_identity_macro);
 
-fn assert_debug<F: Debug>() {}
+struct Proc;
 
-fn main() {
-    struct Id;
-
-    impl Trait for Id {
-        type Value = u8;
+impl Proc {
+    const fn new() -> Self {
+        Proc
     }
-
-    assert_debug::<Wrapper<Id>>();
 }
+
+macro_rules! make_procs_array {
+    ($nproc:literal) => {
+        eseq!(N in 0..$nproc { [#(Proc::new(),)*] })
+    }
+}
+
+// Expands to: `static PROCS: [Proc; NPROC] = [Proc::new(), ..., Proc::new()];`
+static PROCS: [Proc; NPROC] = pass_nproc!(make_procs_array);
+
+fn main() {}
