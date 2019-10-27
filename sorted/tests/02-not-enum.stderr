@@ -3,3 +3,5 @@ error: expected enum or match expression
    |
 31 | #[sorted]
    | ^^^^^^^^^
+
+error: could not compile `sorted-tests`.

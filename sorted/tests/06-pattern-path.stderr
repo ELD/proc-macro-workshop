@@ -3,3 +3,5 @@ error: Error::Fmt should sort before Error::Io
    |
 33 |             Error::Fmt(e) => write!(f, "{}", e),
    |             ^^^^^^^^^^
+
+error: could not compile `sorted-tests`.

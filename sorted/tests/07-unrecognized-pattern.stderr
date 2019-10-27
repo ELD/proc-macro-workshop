@@ -3,3 +3,5 @@ error: unsupported by #[sorted]
    |
 12 |         [] => Some(0),
    |         ^^
+
+error: could not compile `sorted-tests`.

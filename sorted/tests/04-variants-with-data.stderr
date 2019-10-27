@@ -3,3 +3,5 @@ error: Dyn should sort before Fmt
    |
 19 |     Dyn(Box<dyn StdError>),
    |     ^^^
+
+error: could not compile `sorted-tests`.

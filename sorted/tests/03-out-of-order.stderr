@@ -3,3 +3,5 @@ error: SomethingFailed should sort before ThatFailed
    |
 20 |     SomethingFailed,
    |     ^^^^^^^^^^^^^^^
+
+error: could not compile `sorted-tests`.
