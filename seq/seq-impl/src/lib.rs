@@ -36,9 +36,9 @@ impl Into<TokenStream> for SeqMacroInput {
 impl SeqMacroInput {
     fn range(&self) -> std::ops::Range<usize> {
         if self.inclusive {
-            (self.from.base10_parse::<usize>().unwrap()..self.to.base10_parse::<usize>().unwrap() + 1)
+            self.from.base10_parse::<usize>().unwrap()..self.to.base10_parse::<usize>().unwrap() + 1
         } else {
-            (self.from.base10_parse::<usize>().unwrap()..self.to.base10_parse::<usize>().unwrap())
+            self.from.base10_parse::<usize>().unwrap()..self.to.base10_parse::<usize>().unwrap()
         }
     }
 

@@ -121,7 +121,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                         Some(f) => f,
                         None => {
                             return TokenStream::from(quote! {
-                                compile_error!("missing or unrecognized attribute in `builder`");
+                                compile_error!("expected `builder(each = \"...\")`");
                             });
                         }
                     };
@@ -186,7 +186,7 @@ fn fetch_builder_fields(fields: &syn::FieldsNamed) -> Option<Vec<syn::Field>> {
                     syn::Meta::List(meta_list) => {
                         match &meta_list.nested[0] {
                             syn::NestedMeta::Meta(syn::Meta::NameValue(name_value)) => {
-                                name_value.ident.clone()
+                                name_value.path.get_ident().unwrap().clone()
                             }
                             _ => unreachable!(),
                         }
